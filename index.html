@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Site Properities -->
+    <title>Question about VOW.js</title>
+
+    <!-- DocPad Styles + Our Own -->
+    <link  rel="stylesheet" href="normalize.css" />
+    <style>
+        body{ padding: 2em; }
+        p{ color: #000; background: #fff; }
+        pre { background: #eee; font-weight: bold; color: #000; }
+    </style>
+
+</head>
+<body>
+<p>As far as I understand, the output should be :</p>
+<pre>
+promise1 rejected with reason: {"dummy":"dummy"}
+promise2 fulfilled with value: {"dummy":"dummy"}
+</pre>
+<p>but instead we get: </p>
+<pre id="out"></pre>
+<p>The same construct using <a href="https://github.com/kriskowal/q">Q</a>:</p>
+<pre id="qout"></pre>
+<script src="vow.js"></script>
+<script src="q.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
