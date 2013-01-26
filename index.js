@@ -40,7 +40,7 @@
     function qtestRejected(reason, test) {
         var vow1 = Q.defer();
         test(vow1.promise);
-        root.setTimeout(function () { vow1.reject(reason); }, 2000);
+        root.setTimeout(function () { vow1.reject(reason); }, 3000);
     }
 
     qtestRejected(dummy, function (promise1) {
