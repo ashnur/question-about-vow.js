@@ -17,8 +17,9 @@
     <style>
         body{ padding: 2em; }
         p{ color: #000; background: #fff; }
+        p.highlight{ font-weight: bold;color: #a00; background: #fff; }
         pre { background: #eee; font-weight: bold; color: #000; }
-        blockquote { font: italic 1.1em serif; background: #fff; color: #000;}
+        blockquote { font: italic 0.8em serif; background: #fff; color: #000;}
         blockquote:before { content: "“"}
         blockquote:after { content: "”"}
     </style>
@@ -30,15 +31,18 @@
 promise1 rejected with reason: {"dummy":"dummy"}
 promise2 fulfilled with value: {"dummy":"dummy"}
 </pre>
-<p>but instead we get: </p>
+<p><del>but instead</del> we get: </p>
 <pre id="out"></pre>
 <p>The same construct using <a href="https://github.com/kriskowal/q">Q</a>:</p>
 <pre id="qout"></pre>
 <p> source at: <a href="https://github.com/ashnur/question-about-vow.js">https://github.com/ashnur/question-about-vow.js</a></p>
 <hr/>
-<p>I've got the response from @douglascrockford at Sat, Jan 26, 2013:</p>
+<p >I've got the response from @douglascrockford at Sat, Jan 26, 2013:</p>
 <blockquote>That was intentional. Is there a problem with it?</blockquote>
-
+<hr/>
+<p> Sun, Jan 27, 2013: </p>
+<p class="highlight">It seems that Mr. Crockford updated VOW.js, so that now it produces the same result as the rest of the promises implementations I've encountered. Thanks!</p>
+<p >I've updated the file here too, so that it shows the new behavior. </p>
 <script src="vow.js"></script>
 <script src="q.js"></script>
 <script src="index.js"></script>

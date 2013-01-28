@@ -1,6 +1,6 @@
 // vow.js
 // Douglas Crockford
-// 2012-10-29
+// 2013-01-27
 
 // Public Domain
 
@@ -30,8 +30,8 @@ var VOW = (function () {
     function enqueue(
         queue,      // An array of resolve functions (keepers or breakers)
         func,       // A function that was registered with the .when method
-        resolver,   // A resolve function to append to the queue
-        breaker     // A break resolve function to be used if func fails
+        vow,         // A vow that provides the resolution functions
+        next        // A cascade function for such cases when current item is not a function
     ) {
 
 // enqueue is a helper function used by .when. It will append a function to
@@ -42,7 +42,7 @@ var VOW = (function () {
 // If func is not a function, push the resolver so that the value passes to
 // the next cascaded .when.
 
-            ? resolver
+            ? next
 
 // If the func is a function, push a function that calls func with a value.
 // The result can be a promise, or not a promise, or an exception.
@@ -54,18 +54,18 @@ var VOW = (function () {
 // If the result is a promise, then register our resolver with that promise.
 
                     if (result && result.is_promise === true) {
-                        result.when(resolver, breaker);
+                        result.when(vow.keep, vow['break']);
 
 // But if it is not a promise, then use the result to resolve our promise.
 
                     } else {
-                        resolver(result);
+                        vow.keep(result);
                     }
 
 // But if func throws an exception, then break our promise.
 
                 } catch (e) {
-                    breaker(e);
+                    vow['break'](e);
                 }
             };
     }
@@ -147,15 +147,15 @@ var VOW = (function () {
 // If this promise is still pending, then enqueue both kept and broken.
 
                         case 'pending':
-                            enqueue(keepers,  kept,   vow.keep,     vow['break']);
-                            enqueue(breakers, broken, vow['break'], vow['break']);
+                            enqueue(keepers,  kept,   vow, vow.keep);
+                            enqueue(breakers, broken, vow, vow['break']);
                             break;
 
 // If the promise has already been kept, then enqueue only the kept function,
 // and enlighten it.
 
                         case 'kept':
-                            enqueue(keepers, kept, vow.keep, vow['break']);
+                            enqueue(keepers, kept, vow, vow.keep);
                             enlighten(keepers, fate);
                             break;
 
@@ -163,7 +163,7 @@ var VOW = (function () {
 // function, and enlighten it.
 
                         case 'broken':
-                            enqueue(breakers, broken, vow['break'], vow['break']);
+                            enqueue(breakers, broken, vow, vow['break']);
                             enlighten(breakers, fate);
                             break;
                         }
